@@ -52,6 +52,46 @@ export const isDocumentFile = (type) => {
     'application/vnd.ms-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     'text/plain'
-  ]
+]
   return documentTypes.includes(type)
+}
+
+export const formatCurrency = (amount) => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  }).format(amount)
+}
+
+export const calculateCommission = (commissionType, baseAmount, rate) => {
+  switch (commissionType) {
+    case 'per_post':
+      return rate
+    case 'per_sale':
+      return baseAmount * (rate / 100)
+    case 'product_in_hand':
+      return baseAmount
+    case 'combo':
+      return rate
+    default:
+      return 0
+  }
+}
+
+export const validateCommissionStructure = (structure) => {
+  const { type, rate, baseAmount } = structure
+  
+  switch (type) {
+    case 'per_post':
+      return rate > 0
+    case 'per_sale':
+      return rate > 0 && rate <= 100
+    case 'product_in_hand':
+      return baseAmount > 0
+    case 'combo':
+      return rate > 0
+    default:
+      return false
+  }
 }

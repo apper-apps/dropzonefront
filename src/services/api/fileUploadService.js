@@ -49,7 +49,42 @@ export const fileUploadService = {
         type: 'image/jpeg',
         uploadedAt: new Date(Date.now() - 7200000).toISOString(),
         url: '#'
-      }
+}
     ]
+  },
+
+  async uploadProductImage(file, onProgress) {
+    return new Promise((resolve, reject) => {
+      // Simulate image upload with progress
+      let progress = 0
+      const interval = setInterval(() => {
+        progress += Math.random() * 20
+        if (progress >= 100) {
+          progress = 100
+          clearInterval(interval)
+          
+          if (Math.random() > 0.05) { // 95% success rate for images
+            resolve({
+              id: Date.now() + Math.random(),
+              url: URL.createObjectURL(file),
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              uploadedAt: new Date().toISOString()
+            })
+          } else {
+            reject(new Error('Image upload failed'))
+          }
+        }
+        
+        onProgress(progress)
+      }, 80)
+    })
+  },
+
+  async generateTrackingLink(campaignId, influencerId) {
+    // Simulate tracking link generation
+    await new Promise(resolve => setTimeout(resolve, 200))
+    return `https://track.influencerhub.com/c/${campaignId}/i/${influencerId}?ref=${Date.now()}`
   }
 }

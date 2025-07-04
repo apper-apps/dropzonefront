@@ -2,6 +2,9 @@ import { Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import Layout from '@/components/organisms/Layout'
 import HomePage from '@/components/pages/HomePage'
+import ProductsPage from '@/components/pages/ProductsPage'
+import CampaignsPage from '@/components/pages/CampaignsPage'
+import InfluencersPage from '@/components/pages/InfluencersPage'
 
 function App() {
   return (
@@ -9,6 +12,9 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/campaigns" element={<CampaignsPage />} />
+          <Route path="/influencers" element={<InfluencersPage />} />
         </Routes>
       </Layout>
       <ToastContainer
